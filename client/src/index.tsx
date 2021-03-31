@@ -6,9 +6,9 @@ import {
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
-import { Routes } from "./Routes";
 import { setContext } from "@apollo/client/link/context";
 import { getAccessToken } from "./accessToken";
+import { App } from "./App";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -16,9 +16,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
   const token = getAccessToken();
-  // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
@@ -34,7 +32,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Routes />
+    <App />
   </ApolloProvider>,
   document.getElementById("root")
 );
