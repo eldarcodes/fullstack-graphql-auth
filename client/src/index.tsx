@@ -11,7 +11,7 @@ import { setContext } from "@apollo/client/link/context";
 import { getAccessToken, setAccessToken } from "./accessToken";
 import { App } from "./App";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
-import jwtDecode from "jwt-decode";
+import jwtDecode, { JwtPayload } from "jwt-decode";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -37,8 +37,8 @@ const client = new ApolloClient({
         if (!token) return true;
 
         try {
-          const { exp } = jwtDecode(token);
-          if (Date.now() >= exp * 1000) {
+          const { exp } = jwtDecode<JwtPayload>(token);
+          if (Date.now() >= exp! * 1000) {
             return false;
           } else {
             return true;

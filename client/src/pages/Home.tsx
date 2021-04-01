@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useUsersQuery } from "../generated/graphql";
 
 interface HomeProps {}
 
-export const Home: React.FC<HomeProps> = ({}) => {
-  const { data, loading, error } = useUsersQuery({
+export const Home: React.FC<HomeProps> = () => {
+  const { data, loading } = useUsersQuery({
     fetchPolicy: "network-only",
   });
 
