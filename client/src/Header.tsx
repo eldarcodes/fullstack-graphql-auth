@@ -5,7 +5,7 @@ import { useMeQuery } from "./generated/graphql";
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
-  const { data } = useMeQuery({ fetchPolicy: "network-only" });
+  const { data, loading } = useMeQuery({ fetchPolicy: "network-only" });
 
   return (
     <>
@@ -23,7 +23,9 @@ export const Header: React.FC<HeaderProps> = () => {
           <Link to="/bye">bye</Link>
         </div>
       </header>
-      {data && data.me ? (
+      {loading ? (
+        <div>loading...</div>
+      ) : data && data.me ? (
         <div style={{ margin: "20px 0" }}>
           you are logged in as {data.me.email}
         </div>
